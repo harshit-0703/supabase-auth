@@ -16,6 +16,9 @@ const authMiddleware = (req, res, next) => {
     // Add user info to request
     req.user = decoded;
     
+    // Log successful authentication without exposing token details
+    console.log(`User ${decoded.email} authenticated successfully`);
+    
     next();
   } catch (error) {
     console.error('Auth middleware error:', error);

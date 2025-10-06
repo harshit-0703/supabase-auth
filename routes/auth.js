@@ -23,7 +23,10 @@ try {
       getUser: async () => ({ data: { user: { id: 'mock-id', email: 'mock@example.com', user_metadata: { name: 'Mock User' } } }, error: null })
     }
   };
-  console.log('Using mock Supabase client for development');
+  // Only log in development environment
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('Using mock Supabase client for development');
+  }
 }
 
 // Register a new user
@@ -74,6 +77,9 @@ router.post('/register', async (req, res) => {
         name: data.user.user_metadata?.name
       }
     });
+    
+    // Log successful registration without exposing sensitive details
+    console.log(`User registered successfully: ${data.user.email}`);
   } catch (error) {
     console.error('Registration error:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -123,6 +129,9 @@ router.post('/login', async (req, res) => {
         name: data.user.user_metadata?.name
       }
     });
+    
+    // Log successful login without exposing sensitive details
+    console.log(`User logged in successfully: ${data.user.email}`);
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -140,6 +149,9 @@ router.post('/logout', async (req, res) => {
     
     // Clear the token cookie
     res.clearCookie('token');
+    
+    // Log successful logout
+    console.log('User logged out successfully');
     
     res.status(200).json({ message: 'Logout successful' });
   } catch (error) {

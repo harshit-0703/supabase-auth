@@ -24,7 +24,7 @@ app.use('/api/auth', authRoutes);
 
 // Redirect /index.html to root route (/)
 app.get('/index.html', (req, res) => {
-  console.log('Redirecting from /index.html to /');
+  // Redirect without unnecessary logging
   res.redirect('/');
 });
 

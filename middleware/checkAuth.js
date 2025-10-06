@@ -6,11 +6,12 @@ const checkAuth = (req, res, next) => {
   // Get the token from the cookie or query parameter (for testing)
   const token = req.cookies?.token || req.query.token;
   
-  console.log('Token in checkAuth middleware:', token);
+  // Log the request path instead of the token for security
+  console.log(`Auth check for request to: ${req.originalUrl}`);
   
   if (!token) {
     // If no token is found, redirect to login page
-    console.log('No token found, redirecting to login page');
+    console.log(`Authentication failed for request to: ${req.originalUrl}`);
     return res.redirect('/login');
   }
   
